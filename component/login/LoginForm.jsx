@@ -24,9 +24,9 @@ export default function Login() {
   const router = useRouter(); // Next.js router hook
 
   const handleChange = (e) => {
-    const { password, value } = e.target;
-    setFormData({ ...formData, [password]: value });
-    setErrors({ ...errors, [password]: "" }); // Clear error for the specific field
+    const { name, value } = e.target; // Use name attribute to get field name
+    setFormData({ ...formData, [name]: value }); // Update formData correctly
+    setErrors({ ...errors, [name]: "" }); // Clear error for the specific field
   };
 
   const validate = () => {
@@ -77,7 +77,7 @@ export default function Login() {
         <form onSubmit={handleSubmit} noValidate>
           <TextField
             label="Email"
-            name="email"
+            name="email" // Correct name attribute
             value={formData.email}
             onChange={handleChange}
             fullWidth
@@ -87,13 +87,14 @@ export default function Login() {
           />
           <TextField
             label="Password"
-            name="name"
+            name="password" // Correct name attribute
             value={formData.password}
             onChange={handleChange}
             fullWidth
             margin="normal"
             error={Boolean(errors.password)}
             helperText={errors.password}
+            type="password" // Optional: Hide the password text
           />
 
           <Button
