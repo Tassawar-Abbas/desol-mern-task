@@ -6,17 +6,24 @@ import { useEffect } from 'react';
 
 export default function Home() {
   let addUser = async () => {
-    const response = await axios.post("/api/module/user", {
+    const userData = await axios.post("/api/module/user", {
       email: "Amjad@desolint.com",
-      password: "123456abc",
     }, {
       headers: { "Content-Type": "application/json" },
     });
-    console.log(response.data);
+    if (!userData?.response?.data?.email) {
+      const response = await axios.post("/api/module/user", {
+        email: "Amjad@desolint.com",
+        password: "123456abc",
+      }, {
+        headers: { "Content-Type": "application/json" },
+      });
+      console.log(response.data);
+    }
   }
   useEffect(() => {
     addUser()
-  })
+  }, [])
   return (
     <Box
       sx={{

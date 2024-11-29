@@ -12,29 +12,29 @@ import {
 
 export default function Login() {
   const [formData, setFormData] = useState({
-    name: "",
     email: "",
+    password: "",
   });
 
   const [errors, setErrors] = useState({
-    name: "",
     email: "",
+    password: "",
   });
 
   const router = useRouter(); // Next.js router hook
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-    setErrors({ ...errors, [name]: "" }); // Clear error for the specific field
+    const { password, value } = e.target;
+    setFormData({ ...formData, [password]: value });
+    setErrors({ ...errors, [password]: "" }); // Clear error for the specific field
   };
 
   const validate = () => {
     let isValid = true;
-    const newErrors = { name: "", email: "" };
+    const newErrors = { password: "", email: "" };
 
-    if (!formData.name.trim()) {
-      newErrors.name = "Name is required";
+    if (!formData.password.trim()) {
+      newErrors.password = "Password is required";
       isValid = false;
     }
 
@@ -51,10 +51,9 @@ export default function Login() {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
+    e.preventDefault(); 
     if (validate()) {
       console.log("Form Submitted:", formData);
-      // Redirect to another route (e.g., /dashboard) after successful validation
       router.push("/car");
     }
   };
@@ -76,19 +75,6 @@ export default function Login() {
         </Typography>
 
         <form onSubmit={handleSubmit} noValidate>
-          {/* Name Field */}
-          <TextField
-            label="Name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-            error={Boolean(errors.name)}
-            helperText={errors.name}
-          />
-
-          {/* Email Field */}
           <TextField
             label="Email"
             name="email"
@@ -99,8 +85,17 @@ export default function Login() {
             error={Boolean(errors.email)}
             helperText={errors.email}
           />
+          <TextField
+            label="Password"
+            name="name"
+            value={formData.password}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+            error={Boolean(errors.password)}
+            helperText={errors.password}
+          />
 
-          {/* Submit Button */}
           <Button
             type="submit"
             variant="contained"
