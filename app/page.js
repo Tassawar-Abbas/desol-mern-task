@@ -1,26 +1,38 @@
 "use client";
-import axios from "axios";
 import Login from '@/component/login/LoginForm'
 import { Box } from "@mui/material";
 import { useEffect } from 'react';
+import axios from "axios";
 
 export default function Home() {
-  let addUser = async () => {
-    const userData = await axios.post("/api/module/user", {
-      email: "Amjad@desolint.com",
-    }, {
-      headers: { "Content-Type": "application/json" },
-    });
-    if (!userData?.response?.data?.email) {
-      const response = await axios.post("/api/module/user", {
+  const addUser = async () => {
+    try {
+      let data =
+      {
         email: "Amjad@desolint.com",
         password: "123456abc",
-      }, {
-        headers: { "Content-Type": "application/json" },
-      });
-      console.log(response.data);
+      }
+
+      const userData = await axios.post("/api/module/user",
+        data.email,
+        {
+          headers: { "Content-Type": "application/json" },
+        });
+
+      if (!userData?.data?.email) {
+        const response = await axios.post("/api/module/user", data, {
+          headers: { "Content-Type": "application/json" },
+        });
+
+        console.log('User Created:', response.data);
+      } else {
+        console.log('User already exists:', userData.data);
+      }
+    } catch (error) {
+      console.error("Error in addUser:", error);
     }
-  }
+  };
+
   useEffect(() => {
     addUser()
   }, [])
